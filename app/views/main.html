@@ -1,0 +1,157 @@
+<div ng-app="editorApp" ng-controller="MainCtrl" class="container app" unselectable="on" ng-init="showResult = false">
+    <!-- <h1>Editor</h1> -->
+	
+    <!-- <button type="button" ng-click="htmlcontent = orightml" class="btn btn-default">Reset</button> -->
+<div class="row">   
+	<div class="col-xs-12 col-sm-12 col-md-12">
+		<text-angular-toolbar name="htmlcontenttools"></text-angular-toolbar>
+	<div>
+</div>
+<div class="row">
+	<div class="col-xs-3 col-sm-3 col-md-3">
+		<button type="submit" ng-click="insertSpecialText(0)" class="btn btn-default">البسملة</button>
+	</div>
+</div>
+</br>
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-md-6">
+		<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#quran"><b>إضافة آية</b></button>
+		<hr>
+		<div id="quran" class="collapse">
+		<div class="row">
+			<div class="col-xs-6 col-sm-6 col-md-4">
+				<div>
+					 <b>السورة</b>
+					<!--<input type="text" ng-model="soura"
+						class="form-control" style="width:100px" required /> -->
+						<!-- <select name="repeatSelect" id="repeatSelect" ng-model="soura" class="form-control" style="width:100%">
+						  <option ng-repeat="item in souarQuran" value="{{item.number}}">{{item.arabic_name}}</option>
+						</select> -->
+						<select data-ng-options="item.number as item.arabic_name for item in souarQuran" data-ng-model="soura" class="form-control" style="width:100%">
+							<option value=""></option>
+						</select>
+				</div>	
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4">
+				<div>		
+					<b>رقم الآية</b>
+					<input type="text" ng-model="aya"
+						class="form-control" style="width:100%"  required />
+				
+					
+				</div>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4">
+				<div>
+					<button type="submit" ng-click="searchAya()" class="btn btn-default" style="width:80%">بحث</button>
+				</div>
+			</div>
+		</div>		
+		
+		<div class="padded-row">
+		  <b>بحث عن المحتوى</b>
+		  <div angucomplete-alt id="ex2" placeholder="ابحث عن آية" pause="100" selected-object="selectedAyah" local-data="completeQuran" search-fields="verse" title-field="verse" minlength="1" input-class="form-control form-control-small" match-class="highlight"
+			ng-model="selectedAyah">
+		  </div>
+		</div>
+		<br>
+		<div class="result">
+		  <div class="">
+			<div class="alert alert-info" ng-show = "showResult">
+			  <div>
+				  <span class="aaya">
+					<strong>
+						{{selectedAyah.title}}
+						<!-- <div class="under">
+							<img src="images/fasila.png"></img> 
+							<span class="over">{{selectedAyah.description.ayah}}</span>
+						</div> -->
+					</strong>
+				  </span>
+			  </div>  
+			</div>
+			
+			<img src="{{ayaImage}}" class="img-rounded" alt="ayah" ng-show = "showResult" width="100%">
+			<div class="alert alert-danger" ng-show = "!ayahExist">
+			  <strong>خطأ! رقم الآية خاطئ</strong>
+			</div>
+			<div  ng-show="(ayahExist && showResult)|| selectedAyah">
+				<button type="submit" ng-click="insert()" class="btn btn-default">أدخل</button>
+				<button type="submit" ng-click="jumpToAyah(-1)" class="btn btn-default">السابقة</button>
+				<button type="submit" ng-click="jumpToAyah(1)" class="btn btn-default">اللاحقة</button>
+			</div>
+		  </div>
+		</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-md-6">
+		<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#hadith"><b>إضافة حديث<b></button>
+		<hr>
+		<div id="hadith" class="collapse">
+		<div class="row">
+			<div class="col-xs-6 col-sm-6 col-md-4">
+				<div>
+					 <b>الكتاب</b>
+						<!-- <select name="repeatSelect1" id="repeatSelect1" ng-model="book" class="form-control" style="width:100%">
+						  <option ng-repeat="item in books" value="{{item}}">{{item.arabic_name}}</option>
+						</select> -->
+						<select data-ng-options="item as item.arabic_name for item in books" data-ng-model="book" class="form-control" style="width:100%">
+							<option value=""></option>
+						</select>
+				</div>	
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4">
+				<div>		
+					<b>رقم الحديث</b>
+					<input type="text" ng-model="hadithNumber"
+						class="form-control" style="width:100%"  required />
+					
+				</div>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-4">
+				<div>
+					<button type="submit" ng-click="searchHadith()" class="btn btn-default" style="width:80%">بحث</button>
+				</div>
+			</div>
+		</div>	
+		
+		<div class="padded-row">
+		  <b>بحث عن المحتوى</b>
+		  <div angucomplete-alt id="ex3" placeholder="بحث عن حديث" pause="100" selected-object="selectedHadith" local-data="CompleteBook" search-fields="arabic_text" title-field="arabic_text" minlength="1" input-class="form-control form-control-small" match-class="highlight"
+			ng-model="selectedHadith">
+		  </div>
+		</div>
+		<br>
+		<div class="result">
+		  <div class="">
+			<div class="alert alert-info" ng-show = "showResultHadith">
+			  <span class="hadith">
+				<strong>{{selectedHadith.title}}</strong>
+			  </span>
+			</div>
+			<div class="alert alert-danger" ng-show = "!hadithExist">
+			  <strong>خطأ! رقم الحديث خاطئ</strong>
+			</div>
+			<div   ng-show="(hadithExist && showResultHadith) || selectedHadith">
+				<button type="submit" ng-click="insertHadith()" class="btn btn-default">أدخل</button>
+				<button type="submit" ng-click="jumpToHadith(-1)" class="btn btn-default">السابق</button>
+				<button type="submit" ng-click="jumpToHadith(1)" class="btn btn-default">اللاحق</button>
+			</div>
+		  </div>
+		</div>
+		</div>
+	</div>
+</div>
+	</br>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12">
+		<text-angular name="editor" ng-model="htmlcontent" ta-target-toolbars="htmlcontenttools">
+		  <p>أكتب نصك هنا</p>
+		</text-angular>
+	</div>
+</div>		
+    <h1>النتيجة</h1>
+    <div ta-bind="text" ng-model="htmlcontent" ta-readonly='disabled'></div>
+	<!-- <h1>كود للتضمين في المواقع</h1>
+    <textarea ng-model="htmlcontent" style="width: 100%"></textarea> -->
+  </div>
